@@ -15,13 +15,13 @@ print( Device.screenSize );
 //Quick methods to access the screen width and height
 print("Device Width: ${Device.screenWidth}, Device Height: ${Device.screenHeight}");
 
-//Check if device is table
+//Check if device is tablet
 if( Device.get().isTablet ){
     //do something large
 }
 
 //Check if device is iphone x
-if( Device.get().isPhoneX ){
+if( Device.get().isIphoneX ){
     //Do some notch business
 }
 
