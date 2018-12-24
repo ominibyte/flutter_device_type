@@ -1,6 +1,6 @@
 # flutter_device_type
 
-Determine the type of handheld device on Flutter. Like if the device is a Tablet or is iPhoneX. This a port of react-native-device-detection.
+Determine the type of handheld device on Flutter. Like if the device is a Tablet or is iPhoneX. This is a port of react-native-device-detection.
 
 ## Usage
 
