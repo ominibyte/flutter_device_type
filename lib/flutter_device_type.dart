@@ -39,7 +39,7 @@ class Device{
       isPhone = true;
     }
 
-    if( isIos && (screenHeight == 812 || screenWidth == 812) )
+    if( isIos && (screenHeight == 812 || screenWidth == 812 || screenHeight == 896 || screenWidth == 896) )
       isIphoneX = true;
 
     return _device = new Device(
