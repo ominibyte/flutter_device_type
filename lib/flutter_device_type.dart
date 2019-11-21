@@ -1,9 +1,9 @@
 library flutter_device_type;
 
-import 'dart:ui' as ui;
 import 'dart:io';
+import 'dart:ui' as ui;
 
-class Device{
+class Device {
   static double devicePixelRatio = ui.window.devicePixelRatio;
   static ui.Size size = ui.window.physicalSize;
   static double width = size.width;
@@ -11,43 +11,54 @@ class Device{
   static double screenWidth = width / devicePixelRatio;
   static double screenHeight = height / devicePixelRatio;
   static ui.Size screenSize = new ui.Size(screenWidth, screenHeight);
-  final bool isTablet, isPhone, isIos, isAndroid, isIphoneX;
+  final bool isTablet, isPhone, isIos, isAndroid, isIphoneX, hasNotch;
   static Device _device;
 
-  Device({this.isTablet, this.isPhone, this.isIos, this.isAndroid, this.isIphoneX});
+  Device(
+      {this.isTablet,
+      this.isPhone,
+      this.isIos,
+      this.isAndroid,
+      this.isIphoneX,
+      this.hasNotch});
 
-  factory Device.get(){
-    if( _device != null )
-      return _device;
+  factory Device.get() {
+    if (_device != null) return _device;
 
     bool isTablet;
     bool isPhone;
     bool isIos = Platform.isIOS;
     bool isAndroid = Platform.isAndroid;
     bool isIphoneX = false;
+    bool hasNotch = false;
 
-    if(devicePixelRatio < 2 && (width >= 1000 || height >= 1000)) {
+    if (devicePixelRatio < 2 && (width >= 1000 || height >= 1000)) {
       isTablet = true;
       isPhone = false;
-    }
-    else if(devicePixelRatio == 2 && (width >= 1920 || height >= 1920)) {
+    } else if (devicePixelRatio == 2 && (width >= 1920 || height >= 1920)) {
       isTablet = true;
       isPhone = false;
-    }
-    else {
+    } else {
       isTablet = false;
       isPhone = true;
     }
 
-    if( isIos && (screenHeight == 812 || screenWidth == 812 || screenHeight == 896 || screenWidth == 896) )
+    if (isIos &&
+        (screenHeight == 812 ||
+            screenWidth == 812 ||
+            screenHeight == 896 ||
+            screenWidth == 896)) {
       isIphoneX = true;
+      hasNotch = true;
+    }
+    ;
 
     return _device = new Device(
         isTablet: isTablet,
         isPhone: isPhone,
         isAndroid: isAndroid,
         isIos: isIos,
-        isIphoneX: isIphoneX
-    );
+        isIphoneX: isIphoneX,
+        hasNotch: hasNotch);
   }
 }
