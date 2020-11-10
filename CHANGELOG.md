@@ -1,3 +1,6 @@
+## [0.3.2] - 10-11-2020
+* Added some more checks for IPhoneX for those still using it. This allows detecting from iPhoneX onwards
+
 ## [0.3.1] - 10-11-2020
 * Fix more issues relating to low res Android devices.
 

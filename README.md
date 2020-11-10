@@ -1,6 +1,6 @@
 # flutter_device_type
 
-Determine the type of handheld device on Flutter. Like if the device is a Tablet or is iPhoneX. This is a port of react-native-device-detection.
+Determine the type of handheld device on Flutter. Like if the device is a Tablet or is iPhoneX or later or has notch.
 
 ## Usage
 
@@ -20,8 +20,14 @@ if( Device.get().isTablet ){
     //do something large
 }
 
-//Check if device is iphone x
+//Check if device is at least an iphone x
+// NOTE: This detects up to Iphone 12 pro max
 if( Device.get().isIphoneX ){
+    //Do some notch business
+}
+
+// For a generic notch test use
+if( Device.get().hasNotch ){
     //Do some notch business
 }
 
@@ -36,4 +42,6 @@ if( Device.get().isIos && Device.get().isTablet ){
 }
 ```
 
-`Device.get()` will return only one instance so not need to save it except for brevity
+`Device.get()` <s>will return only one instance so not need to save it except for brevity</s>
+
+You should try not to store a reference for `Device.get()` because it now responds to changes and orientations

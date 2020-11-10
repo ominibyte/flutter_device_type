@@ -79,11 +79,17 @@ class Device {
       }
     }
 
-    if (isIos &&
+    if (isIos && isPhone &&
         (screenHeight == 812 ||
             screenWidth == 812 ||
             screenHeight == 896 ||
-            screenWidth == 896)) {
+            screenWidth == 896 ||
+            // iPhone 12 pro
+            screenHeight == 844 ||
+            screenWidth == 844 ||
+            // Iphone 12 pro max
+            screenHeight == 926 ||
+            screenWidth == 926)) {
       isIphoneX = true;
       hasNotch = true;
     }
