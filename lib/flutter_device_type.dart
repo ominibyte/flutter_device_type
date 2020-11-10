@@ -31,6 +31,14 @@ class Device {
       onMetricsChange = ui.window.onMetricsChanged;
       ui.window.onMetricsChanged = () {
         _device = null;
+
+        size = ui.window.physicalSize;
+        width = size.width;
+        height = size.height;
+        screenWidth = width / devicePixelRatio;
+        screenHeight = height / devicePixelRatio;
+        screenSize = new ui.Size(screenWidth, screenHeight);
+
         onMetricsChange();
       };
     }
@@ -57,8 +65,10 @@ class Device {
 
     // Recalculate for Android Tablet using device inches
     if( isAndroid ){
-      final diagonalSizeInches = (Math.sqrt(Math.pow(screenWidth, 2) + Math.pow(screenHeight, 2))) / _ppi;
-      //print(diagonalSizeInches);
+      final adjustedWidth = _calWidth() / devicePixelRatio;
+      final adjustedHeight = _calHeight() / devicePixelRatio;
+      final diagonalSizeInches = (Math.sqrt(Math.pow(adjustedWidth, 2) + Math.pow(adjustedHeight, 2))) / _ppi;
+      //print("Dialog size inches is $diagonalSizeInches");
       if( diagonalSizeInches >= 7 ){
         isTablet = true;
         isPhone = false;
@@ -88,6 +98,16 @@ class Device {
         isIos: isIos,
         isIphoneX: isIphoneX,
         hasNotch: hasNotch);
+  }
+
+  static double _calWidth(){
+    if( width > height )
+      return (width + (ui.window.viewPadding.left +  ui.window.viewPadding.right) * width / height);
+    return (width + ui.window.viewPadding.left +  ui.window.viewPadding.right);
+  }
+
+  static double _calHeight(){
+    return (height + (ui.window.viewPadding.top +  ui.window.viewPadding.bottom));
   }
 
   static int get _ppi => Platform.isAndroid ? 160 : Platform.isIOS ? 150 : 96;

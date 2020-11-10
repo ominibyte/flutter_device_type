@@ -1,4 +1,7 @@
-## [0.3.0] - 24-12-2018
+## [0.3.1] - 10-11-2020
+* Fix more issues relating to low res Android devices.
+
+## [0.3.0] - 04-11-2020
 * Fix issues relating to low res Android devices.
 * Added hasNotch property
 
