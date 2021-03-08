@@ -4,6 +4,8 @@ import 'dart:io';
 import 'dart:ui' as ui;
 import 'dart:math' as Math;
 
+import 'package:flutter/foundation.dart';
+
 class Device {
   static double devicePixelRatio = ui.window.devicePixelRatio;
   static ui.Size size = ui.window.physicalSize;
@@ -13,21 +15,21 @@ class Device {
   static double screenHeight = height / devicePixelRatio;
   static ui.Size screenSize = new ui.Size(screenWidth, screenHeight);
   final bool isTablet, isPhone, isIos, isAndroid, isIphoneX, hasNotch;
-  static Device _device;
-  static Function onMetricsChange;
+  static Device? _device;
+  static Function? onMetricsChange;
 
   Device(
-      {this.isTablet,
-        this.isPhone,
-        this.isIos,
-        this.isAndroid,
-        this.isIphoneX,
-        this.hasNotch});
+      {required this.isTablet,
+      required this.isPhone,
+      required this.isIos,
+      required this.isAndroid,
+      required this.isIphoneX,
+      required this.hasNotch});
 
   factory Device.get() {
-    if (_device != null) return _device;
+    if (_device != null) return _device!;
 
-    if( onMetricsChange == null ) {
+    if (onMetricsChange == null) {
       onMetricsChange = ui.window.onMetricsChanged;
       ui.window.onMetricsChanged = () {
         _device = null;
@@ -39,7 +41,7 @@ class Device {
         screenHeight = height / devicePixelRatio;
         screenSize = new ui.Size(screenWidth, screenHeight);
 
-        onMetricsChange();
+        onMetricsChange!();
       };
     }
 
@@ -53,33 +55,33 @@ class Device {
     if (devicePixelRatio < 2 && (width >= 1000 || height >= 1000)) {
       isTablet = true;
       isPhone = false;
-    }
-    else if (devicePixelRatio == 2 && (width >= 1920 || height >= 1920)) {
+    } else if (devicePixelRatio == 2 && (width >= 1920 || height >= 1920)) {
       isTablet = true;
       isPhone = false;
-    }
-    else {
+    } else {
       isTablet = false;
       isPhone = true;
     }
 
     // Recalculate for Android Tablet using device inches
-    if( isAndroid ){
+    if (isAndroid) {
       final adjustedWidth = _calWidth() / devicePixelRatio;
       final adjustedHeight = _calHeight() / devicePixelRatio;
-      final diagonalSizeInches = (Math.sqrt(Math.pow(adjustedWidth, 2) + Math.pow(adjustedHeight, 2))) / _ppi;
+      final diagonalSizeInches = (Math.sqrt(
+              Math.pow(adjustedWidth, 2) + Math.pow(adjustedHeight, 2))) /
+          _ppi;
       //print("Dialog size inches is $diagonalSizeInches");
-      if( diagonalSizeInches >= 7 ){
+      if (diagonalSizeInches >= 7) {
         isTablet = true;
         isPhone = false;
-      }
-      else{
+      } else {
         isTablet = false;
         isPhone = true;
       }
     }
 
-    if (isIos && isPhone &&
+    if (isIos &&
+        isPhone &&
         (screenHeight == 812 ||
             screenWidth == 812 ||
             screenHeight == 896 ||
@@ -94,8 +96,7 @@ class Device {
       hasNotch = true;
     }
 
-    if( _hasTopOrBottomPadding() )
-      hasNotch = true;
+    if (_hasTopOrBottomPadding()) hasNotch = true;
 
     return _device = new Device(
         isTablet: isTablet,
@@ -106,19 +107,27 @@ class Device {
         hasNotch: hasNotch);
   }
 
-  static double _calWidth(){
-    if( width > height )
-      return (width + (ui.window.viewPadding.left +  ui.window.viewPadding.right) * width / height);
-    return (width + ui.window.viewPadding.left +  ui.window.viewPadding.right);
+  static double _calWidth() {
+    if (width > height)
+      return (width +
+          (ui.window.viewPadding.left + ui.window.viewPadding.right) *
+              width /
+              height);
+    return (width + ui.window.viewPadding.left + ui.window.viewPadding.right);
   }
 
-  static double _calHeight(){
-    return (height + (ui.window.viewPadding.top +  ui.window.viewPadding.bottom));
+  static double _calHeight() {
+    return (height +
+        (ui.window.viewPadding.top + ui.window.viewPadding.bottom));
   }
 
-  static int get _ppi => Platform.isAndroid ? 160 : Platform.isIOS ? 150 : 96;
+  static int get _ppi => Platform.isAndroid
+      ? 160
+      : Platform.isIOS
+          ? 150
+          : 96;
 
-  static bool _hasTopOrBottomPadding(){
+  static bool _hasTopOrBottomPadding() {
     final padding = ui.window.viewPadding;
     //print(padding);
     return padding.top > 0 || padding.bottom > 0;
