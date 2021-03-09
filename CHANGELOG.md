@@ -1,3 +1,6 @@
+## [0.4.0] - 03-09-2020
+* Switched to null safety
+
 ## [0.3.2] - 10-11-2020
 * Added some more checks for IPhoneX for those still using it. This allows detecting from iPhoneX onwards
 

@@ -1,6 +1,6 @@
 name: flutter_device_type
 description: Determine the type of handheld device on Flutter. Like if the device is a Tablet or is iPhoneX.
-version: 0.3.2
+version: 0.4.0
 homepage: https://github.com/ominibyte/flutter_device_type.git
 
 environment:

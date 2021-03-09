@@ -4,8 +4,6 @@ import 'dart:io';
 import 'dart:ui' as ui;
 import 'dart:math' as Math;
 
-import 'package:flutter/foundation.dart';
-
 class Device {
   static double devicePixelRatio = ui.window.devicePixelRatio;
   static ui.Size size = ui.window.physicalSize;
