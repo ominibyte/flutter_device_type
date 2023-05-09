@@ -32,6 +32,7 @@ class Device {
       ui.window.onMetricsChanged = () {
         _device = null;
 
+        devicePixelRatio = ui.window.devicePixelRatio;
         size = ui.window.physicalSize;
         width = size.width;
         height = size.height;
